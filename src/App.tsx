@@ -167,8 +167,33 @@ function App() {
           </>
         )}
       </form>
-      <footer style={{ marginTop: 'auto', padding: '2rem 0', textAlign: 'center', fontSize: '0.9rem', opacity: 0.6 }}>
-        © 2025 Gregor Löffler
+      <footer
+        style={{
+          marginTop: 'auto',
+          padding: '2rem 0',
+          textAlign: 'center',
+          fontSize: '0.9rem',
+          opacity: 0.6,
+        }}
+      >
+        © 2025{' '}
+        <a
+          href="https://github.com/gloffler"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: 'inherit', textDecoration: 'underline' }}
+        >
+          Gregor Löffler
+        </a>{' '}
+        —{' '}
+        <a
+          href="https://opensource.org/licenses/MIT"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: 'inherit', textDecoration: 'underline' }}
+        >
+          MIT License
+        </a>
       </footer>
     </div>
   )

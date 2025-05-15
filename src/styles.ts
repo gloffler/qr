@@ -1,9 +1,9 @@
 const styles: { [key: string]: React.CSSProperties } = {
   wrapper: {
-    minHeight: '100vh',
+    minHeight: '100vh', // lässt Platz für Footer
     display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
+    flexDirection: 'column', // wichtig für vertikales Layout
+    alignItems: 'center',
     paddingTop: '100px',
     paddingLeft: '1rem',
     paddingRight: '1rem',

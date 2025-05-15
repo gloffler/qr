@@ -17,7 +17,7 @@ A modern, minimalist QR Code generator built with React and TypeScript — optim
 
 ## 🚀 Live Demo
 
-👉 [Click to try it out](https://gloffler.github.io/qr
+👉 [Click to try it out](https://gloffler.github.io/qr)
 
 ---
 

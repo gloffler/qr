@@ -84,8 +84,16 @@ function App() {
 
         {qrValue && (
           <>
-            <div style={{ marginTop: '2rem' }}>
-              <QRCodeCanvas value={qrValue} size={200} ref={canvasRef} />
+            <div style={{ marginTop: '2rem', display: 'flex', justifyContent: 'center' }}>
+              <div
+                style={{
+                  padding: '12px',
+                  backgroundColor: '#ffffff',
+                  borderRadius: '8px',
+                }}
+              >
+                <QRCodeCanvas value={qrValue} size={200} ref={canvasRef} />
+              </div>
             </div>
             <button type="button" style={{ ...styles.button, marginTop: '1rem' }} onClick={handleDownload}>
               Download

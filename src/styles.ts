@@ -2,9 +2,11 @@ const styles: { [key: string]: React.CSSProperties } = {
   wrapper: {
     minHeight: '100vh',
     display: 'flex',
-    alignItems: 'center',
     justifyContent: 'center',
-    padding: '1rem',
+    alignItems: 'flex-start',
+    paddingTop: '100px',
+    paddingLeft: '1rem',
+    paddingRight: '1rem',
     backgroundColor: 'var(--bg)',
     color: 'var(--text)',
     transition: 'all 0.3s ease',
@@ -33,7 +35,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     borderRadius: '0.5rem',
     border: '1px solid #ccc',
     width: '90%',
-    marginTop: '1.5rem',
+    marginTop: '0rem',
     marginBottom: '1rem',
   },
   button: {

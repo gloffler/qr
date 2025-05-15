@@ -1,22 +1,21 @@
 import { useState, useEffect, FormEvent, useRef } from 'react'
 import { QRCodeCanvas } from 'qrcode.react'
 import styles from './styles'
-import './App.css' // für Toggle-Styling
+import './App.css'
 
 function App() {
+  const [activeTab, setActiveTab] = useState<'url' | 'wifi'>('url')
   const [text, setText] = useState('')
+  const [ssid, setSsid] = useState('')
+  const [wifiPass, setWifiPass] = useState('')
   const [qrValue, setQrValue] = useState('')
   const [darkMode, setDarkMode] = useState(false)
   const [error, setError] = useState('')
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
   useEffect(() => {
-    // Beim ersten Laden: System-Darkmode prüfen
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
     setDarkMode(prefersDark)
-
-    // Theme setzen, wenn sich State ändert
-    document.documentElement.setAttribute('data-theme', prefersDark ? 'dark' : 'light')
   }, [])
 
   useEffect(() => {
@@ -34,13 +33,29 @@ function App() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    if (!isValidUrl(text)) {
-      setError('Please enter a valid URL (starting with http:// or https://)')
-      setQrValue('')
-      return
+
+    if (activeTab === 'url') {
+      if (!isValidUrl(text)) {
+        setError('Please enter a valid URL (starting with http:// or https://)')
+        setQrValue('')
+        return
+      }
+      setError('')
+      setQrValue(text)
+    } else {
+      const ssidValid = ssid.trim().length > 0
+      const passValid = wifiPass.length >= 8 && /^[\x20-\x7E]+$/.test(wifiPass)
+
+      if (!ssidValid || !passValid) {
+        setError('SSID must not be empty. Password must be at least 8 valid characters.')
+        setQrValue('')
+        return
+      }
+
+      const wifiString = `WIFI:T:WPA;S:${ssid};P:${wifiPass};;`
+      setError('')
+      setQrValue(wifiString)
     }
-    setError('')
-    setQrValue(text)
   }
 
   const handleDownload = () => {
@@ -68,13 +83,64 @@ function App() {
           </label>
         </div>
 
-        <input
-          type="text"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="Enter a valid URL"
-          style={styles.input}
-        />
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '0.5rem',
+            margin: '1rem 0',
+          }}
+        >
+          <button
+            type="button"
+            onClick={() => setActiveTab('url')}
+            style={{
+              ...styles.button,
+              backgroundColor: activeTab === 'url' ? '#3b82f6' : '#d1d5db',
+              color: activeTab === 'url' ? 'white' : 'black',
+            }}
+          >
+            URL
+          </button>
+          <button
+            type="button"
+            onClick={() => setActiveTab('wifi')}
+            style={{
+              ...styles.button,
+              backgroundColor: activeTab === 'wifi' ? '#3b82f6' : '#d1d5db',
+              color: activeTab === 'wifi' ? 'white' : 'black',
+            }}
+          >
+            WiFi
+          </button>
+        </div>
+
+        {activeTab === 'url' ? (
+          <input
+            type="text"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Enter a valid URL"
+            style={styles.input}
+          />
+        ) : (
+          <>
+            <input
+              type="text"
+              value={ssid}
+              onChange={(e) => setSsid(e.target.value)}
+              placeholder="WiFi SSID"
+              style={styles.input}
+            />
+            <input
+              type="password"
+              value={wifiPass}
+              onChange={(e) => setWifiPass(e.target.value)}
+              placeholder="WiFi Password"
+              style={styles.input}
+            />
+          </>
+        )}
 
         <button type="submit" style={styles.button}>
           Generate

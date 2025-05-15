@@ -36,7 +36,7 @@ cd qr
 npm install
 ```
 
-### Start dvelopment server
+### 3. Start dvelopment server
 ```bash
 npm start
 ```
